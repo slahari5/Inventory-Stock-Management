@@ -21,28 +21,26 @@ public class InputHandler {
 	private HashSet<String> cardDetails = db.getCreditCardList();
 	private double totalAmount = 0;
 	public String isCreditCardExist = "";
-	
+
 	public InputHandler() {}
 
 	public InputHandler(String path){
 		helperFile = new HelperFile(path);
 	}
 
-	public void outputAppend(String sample){
-		data_output.add(sample);
-	}
-
 	public boolean initOrder() {
 		try{
+
 			helperFile.readFile(true);
-		
-		}catch (Exception e){
+
+		}
+		catch (Exception e){
 			return false;
 		}
 		obtainOrderItems(helperFile.getfileContent());
 		return true;
 	}
-	
+
 	public boolean validateOrder() {
 		validateStockItem();
 		return data_output.size() == 0;
@@ -73,6 +71,10 @@ public class InputHandler {
 		produceOutput();
 	}
 
+	public void outputAppend(String sample){
+		data_output.add(sample);
+	}
+
 	public void DisplayMessage() {
 		for(String data: data_output){
 			System.out.println(data);
@@ -85,7 +87,6 @@ public class InputHandler {
 			String[] orderItem = data.split(",");
 
 			if(orderItem.length > 2) {
-				System.out.println("dddd-> "+orderItem.toString());
 				if(db.getInventoryStockList().containsKey(orderItem[0])){
 					cartOrder.add(new CartOrder(orderItem[0],
 							Integer.parseInt(orderItem[1]),orderItem[2].
@@ -114,25 +115,22 @@ public class InputHandler {
 		if(!data_output.isEmpty()){
 			cartOrder.clear();
 		}
-
 	}
 
 	public boolean validateCardExist(String creditCardNum) {
-		   HashSet<String> creditCardList = db.getCreditCardList();
-		   return creditCardList.contains(creditCardNum);
+		HashSet<String> creditCardList = db.getCreditCardList();
+		return creditCardList.contains(creditCardNum);
 	}
-	
-	
+
 	public boolean validateStockItem() {
 		StringBuilder stringBuilder = new StringBuilder();
+
 		db.getFinalOderList().add(finalOrder);
 
 		if(!stockAvailabilityValidate()){
 			data_output.add("Stock don't have one of the items requested.");
 		}else if(!stockQuantityValidate()){
-			data_output.add("Kindly provide the accurate quantity details for one of the items requested.");
 		}else if(!stockCategoryCapacityValidate()){
-			data_output.add("Restriction on the cap for categories occured. Current order is exceeding the limit. ");
 		}
 
 		for(CartOrder cartOrderItems: cartOrder){
@@ -149,8 +147,7 @@ public class InputHandler {
 		}
 
 		if(stringBuilder.length() > 0){
-			data_output.add("Kindly provide accurate quantities");
-			data_output.add(stringBuilder.toString());
+			data_output.add("Kindly provide accurate quantities for "+stringBuilder.toString());
 		}
 		return stringBuilder.length()==0;
 	}
@@ -166,7 +163,9 @@ public class InputHandler {
 	}
 
 	private boolean stockQuantityValidate() {
+
 		for(CartOrder cartOrderitem: cartOrder){
+
 			if(db.getInventoryStockList().get(cartOrderitem.getItemName()).getQuantity()
 					<cartOrderitem.getQuantity()){
 				return false;
@@ -175,11 +174,11 @@ public class InputHandler {
 
 		return true;
 	}
-	
-	//This method is used for checking the output file depending on the inputs given.
-	
+
 	private boolean stockCategoryCapacityValidate() {
 
+
+		HashMap<String,String> map1 = new HashMap<>();
 
 		HashMap<String,Integer> map = new HashMap<>();
 		for(CartOrder cartOrderitem: cartOrder){
@@ -187,12 +186,25 @@ public class InputHandler {
 					,map.getOrDefault(db.getInventoryStockList()
 							.get(cartOrderitem.getItemName()).getCategoryName(),0)
 					+ cartOrderitem.getQuantity());
+
+
+			map1.put(db.getInventoryStockList().get(cartOrderitem.getItemName()).getCategoryName()
+					,map1.getOrDefault(db.getInventoryStockList().get(cartOrderitem.getItemName()).getCategoryName(), "")
+					+ cartOrderitem.getItemName()+ " ");
+
 		}
+
+		String errorline = "The items which are exceeding the cap limit  ---> ";
 		if(map.getOrDefault("Essential",0) > 10){
+
+			data_output.add(errorline + map1.get("Essential"));
+
 			return false;
 		}else if(map.getOrDefault("Luxury",0) > 10){
+			data_output.add(errorline + map1.get("Luxury"));
 			return false;
 		}else if(map.getOrDefault("Misc",0) > 10){
+			data_output.add(errorline + map1.get("Misc"));
 			return false;
 		}
 
@@ -200,9 +212,9 @@ public class InputHandler {
 
 	}    
 
-	//This method is defined for generating the output file depending on the inputs given.
+
 	public void produceOutput(){
-		if(data_output.size()==0){
+		if(data_output.size() == 0){
 			boolean itemIndex = false;
 
 			data_output.add("Item, Quantity, Price, Total Paid Amount");
@@ -210,24 +222,25 @@ public class InputHandler {
 			for(CartOrder CartOrderitem: cartOrder){
 				if( !itemIndex ) {
 					itemIndex = true;
-					
+
 					data_output.add(CartOrderitem.getItemName()+","+CartOrderitem.getQuantity()+"," + 
 							db.getInventoryStockList().get(CartOrderitem.getItemName()).getPrice() * CartOrderitem.getQuantity()
-								+","+Double.toString((finalOrder.getTotalAmount())));
+							+","+Double.toString((finalOrder.getTotalAmount())));
 
 				}
 				else
 					data_output.add(CartOrderitem.getItemName()+","+CartOrderitem.getQuantity()+
 							","+db.getInventoryStockList().get(CartOrderitem.getItemName()).getPrice() * CartOrderitem.getQuantity());
-				
+
 			}
-		try{
+			try{
 				helperFile.generateOutput(data_output,false);
 			}catch (IOException e){
 				e.printStackTrace();
-				
+
 			}
-		}else{
+		}
+		else{
 			try{
 				helperFile.generateOutput(data_output,true);
 			}catch (IOException e){
