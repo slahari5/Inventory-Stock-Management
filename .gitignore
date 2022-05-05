@@ -11,3 +11,8 @@ tmp/
 local.properties
 .loadpath
 .factorypath
+*.class
+InventoryStockManagement/resources/.DS_Store
+InventoryStockManagement/.DS_Store
+InventoryStockManagement/src/.DS_Store
+.DS_Store
