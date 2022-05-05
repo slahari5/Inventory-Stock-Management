@@ -20,10 +20,8 @@ public class CardHandler {
 	public void addNewLine(String cardNum) {
 			
 		try {
-			System.out.println("addNewLine ...? "+cardNum);
 			helperFile.addNewLine(cardNum);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -43,12 +41,5 @@ public class CardHandler {
 	        }
 		
 	}
-	
-	
-	
-	
-
-	
-	
 	
 }
