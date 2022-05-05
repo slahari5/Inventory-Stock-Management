@@ -34,11 +34,6 @@ public class CartOrder {
 	public void setCreditCardNum(String creditCardNum) {
 		this.creditCardNum = creditCardNum;
 	}
-
-	@Override
-	public String toString() {
-		return "CartOrder [itemName=" + itemName + ", quantity=" + quantity + ", creditCardNum=" + creditCardNum + "]";
-	}
-
+	
 	
 }
