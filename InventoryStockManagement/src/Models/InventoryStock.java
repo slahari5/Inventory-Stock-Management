@@ -6,9 +6,9 @@ public class InventoryStock {
 	private String item_Title;
 	private int quantity;
 	private double price;
-	
+
 	public InventoryStock(String categoryName, String item_Title, int quantity, double price) {
-		
+
 		this.categoryName = categoryName;
 		this.item_Title = item_Title;
 		this.quantity = quantity;
@@ -16,7 +16,7 @@ public class InventoryStock {
 	}
 
 	public InventoryStock(String item_Title, int quantity) {
-		
+
 		this.item_Title = item_Title;
 		this.quantity = quantity;
 	}
@@ -52,6 +52,6 @@ public class InventoryStock {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	
-	
+
+
 }
