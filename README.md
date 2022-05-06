@@ -29,6 +29,19 @@ Every category has a quantity cap limit on items that are purchased in single or
 
 Run Instructions:
 
+Running using jar file
+1. Install latest java version
+2. Open terminal in the project root directory
+3. Run the following command
+`java -jar InventoryStockManagement.jar <"Input file path">`
+
+For example
+`java -jar InventoryStockManagement.jar ./resources/InputSheet.csv`
+
+
+------------------------
+
+Alternative Eclipse run
 1. Go to repo individual-project-slahari5 and clone the repository or download the zip file.
 2. You need Eclipse IDE to run the code.
 3. Open the zipped folder or the entire folder in Eclipse using Open Project from FileSystem.
