@@ -7,17 +7,21 @@ import Handlers.IOFileHandler;
 public class Billing {
 
 	private static  CardHandler cardHandler ;
-	
+	private final static String cardFilePath = "./resources/Cards.csv";
+	private final static String inventoryDataSetFilePath = "./resources/InventoryStock.csv";
+			
 	public static void main(String[] args) throws IOException {
+		
+		System.out.println("Please enter the input file path to order items:");
 
 		if(args.length == 0){
-			System.out.println("Please enter file path to Inventory Stock Dataset");
+			System.out.println("No valid path provided");
 			System.exit(0);
 		}
-
-		datasetinit(args[0]);
-		cardinit(args[1]);
-		orderCreation(args[2]);
+	    
+		datasetinit(inventoryDataSetFilePath);
+		cardinit(cardFilePath);
+		orderCreation(args[0]);
 
 	}
 
