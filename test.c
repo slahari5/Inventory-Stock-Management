@@ -24,6 +24,6 @@ __cpuid(&eax, &ebx, &ecx, &edx);
 printf("CPUID(0x4FFFFFFC), exits=%u", eax,);
 eax = 0x4FFFFFFD;
 __cpuid(&eax, &ebx, &ecx, &edx);
-printf("CPUID(0x4FFFFFFD), time in ebx: %u", ebx,);
-printf("CPUID(0x4FFFFFFD), time in ecx: %u", ecx,);
+printf("CPUID(0x4FFFFFFD), time in ebx: %u", ebx);
+printf("CPUID(0x4FFFFFFD), time in ecx: %u", ecx);
 }
