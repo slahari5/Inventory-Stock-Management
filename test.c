@@ -21,6 +21,9 @@ unsigned long long time;
 
 eax = 0x4FFFFFFC;
 __cpuid(&eax, &ebx, &ecx, &edx);
-time = (unsigned long long) ebx << 32 | ecx;
-printf("CPUID(0x4FFFFFFC), exits=%u, cycles spent in exit=%llu\n", eax, time);
+printf("CPUID(0x4FFFFFFC), exits=%u", eax,);
+eax = 0x4FFFFFFD;
+__cpuid(&eax, &ebx, &ecx, &edx);
+printf("CPUID(0x4FFFFFFD), time in ebx: %u", ebx,);
+printf("CPUID(0x4FFFFFFD), time in ecx: %u", ecx,);
 }
