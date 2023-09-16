@@ -1,5 +1,4 @@
-# individual-project-slahari5
-
+Inventory Stock Management
 Name : SAILAHARI SEETHAMRAJU
 Student ID: 016037112
 
